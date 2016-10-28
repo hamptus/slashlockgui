@@ -3,6 +3,10 @@
 #:import sla kivy.adapters.simplelistadapter
 
 
+<HorizontalContainer@RelativeLayout>
+    size_hint: (1, None)
+    height: 20
+
 <ListItemLabel>
     color: (0, 0, 0, 1)
     halign: "left"
@@ -14,6 +18,19 @@
         Rectangle:
             size: self.size
             pos: self.pos
+
+<PasswordInput@TextInput>
+    multiline: False
+    write_tab: False
+    password: True
+    color: (0, 0, 0, 1)
+    height: self.minimum_height
+    size_hint: (None, None)
+    background_normal: self.background_active
+    on_text_validate: app.set_passphrase()
+    width: self.parent.width - 20
+    pos: (10, 0)
+
 
 <HorizontalSeparator@Widget>
     canvas:
@@ -139,38 +156,43 @@
     BoxLayout:
         orientation: "vertical"
         size: root.size
-        BoxLayout:
-            orientation: "vertical"
-            Label:
-                text: "Enter the passphrase you want to use to lock / unlock files:"
-                size_hint_y: None
-                text_size: self.width - 25, None
-                height: self.texture_size[1] + 50
-                color: (0, 0, 0, 1)
-            AnchorLayout:
-                anchor_x: "center"
-                anchor_y: "top"
-                size_hint: (1, 1)
-                TextInput:
-                    id: passphrase
-                    focus: True
-                    multiline: False
-                    password: True
+        StackLayout:
+            HorizontalContainer:
+                Label:
+                    text: "Password:"
+                    size_hint: None, None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
                     color: (0, 0, 0, 1)
-                    height: self.minimum_height
-                    width: root.width - 8
-                    size_hint: (None, None)
-                    background_normal: self.background_active
-                    on_text_validate: app.set_passphrase()
-        AnchorLayout:
-            anchor_x: "center"
-            anchor_y: "center"
-            size: (self.parent.width, 50)
-            size_hint: (1, 1)
-            BlueBlackButton:
-                text: "Set passphrase"
-                on_release: app.set_passphrase()
-                size: (120, 50)
+                    pos: (10, 0)
+            HorizontalContainer:
+                height: passphrase.height
+                PasswordInput:
+                    id: passphrase
+                    focuse: True
+
+
+            HorizontalContainer:
+                Label:
+                    text: "Confirm password:"
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1] + 5
+                    color: (0, 0, 0, 1)
+                    pos: (10, 0)
+            HorizontalContainer:
+                height: confirm_passphrase.height
+                PasswordInput:
+                    id: confirm_passphrase
+
+            HorizontalContainer:
+                height: password_continue_button.height + 5
+                BlueBlackButton:
+                    id: password_continue_button
+                    text: "Continue"
+                    on_release: app.set_passphrase()
+                    size: (120, 50)
+                    pos: (10, 0)
 
 <DropScreen@Screen>
     name: "drop_screen"

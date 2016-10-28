@@ -1,4 +1,5 @@
 import os
+import sys
 import hashlib
 import functools
 from concurrent.futures import ThreadPoolExecutor
@@ -32,6 +33,16 @@ from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.image import Image
 
 import slashlock
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
 class ChooseDirectoryScreen(Screen):
@@ -76,10 +87,7 @@ class CryptoApp(App):
     _metadata = None
 
     def build(self):
-        build_file = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)),
-            'gui.kv',
-        )
+        build_file = resource_path('gui.kv')
         return Builder.load_file(build_file)
 
     @property
