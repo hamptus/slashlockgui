@@ -98,6 +98,19 @@ class CryptoApp(App):
     def _screen_manager(self):
         return self.root.ids['screen_manager']
 
+    def _validate_passphrase(self):
+        self._passphrase = self.root.ids[
+            'set_passphrase_screen'].ids['passphrase'].text
+        confirm_passphrase = self.root.ids[
+            'set_passphrase_screen'].ids['confirm_passphrase'].text
+
+        continue_button = self.root.ids['set_passphrase_screen'].ids['password_continue_button']  # NOQA
+
+        if all([self._passphrase, confirm_passphrase]) and self._passphrase == confirm_passphrase:
+            continue_button.disabled = False
+        else:
+            continue_button.disabled = True
+
     def on_drop(self, *args):
         # Remove quotes that were inserted to replace spaces and hyphens
         sm = self._screen_manager
@@ -201,6 +214,12 @@ class CryptoApp(App):
 
     def set_passphrase(self):
         """ Set the passphrase """
+
+        continue_button = self.root.ids['set_passphrase_screen'].ids['password_continue_button']  # NOQA
+
+        if continue_button.disabled:
+            return
+
         self._passphrase = self.root.ids[
             'set_passphrase_screen'].ids['passphrase'].text
 
