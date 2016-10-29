@@ -68,7 +68,7 @@ class ChooseDirectoryScreen(Screen):
 
     def choose_directory(self):
         self.disabled = True
-        executor = ThreadPoolExecutor()
+        executor = ThreadPoolExecutor(max_workers=1)
 
         future_result = executor.submit(self._choose_directory)
         future_result.add_done_callback(self._directory_selected)
@@ -153,7 +153,7 @@ class CryptoApp(App):
         """ Encrypt the file """
         print('locking file...', end='')
 
-        executor = ThreadPoolExecutor()
+        executor = ThreadPoolExecutor(max_workers=1)
         future_result = executor.submit(functools.partial(
             slashlock.lock,
             self.filepath,
@@ -169,7 +169,7 @@ class CryptoApp(App):
 
         print('Unlocking file...', end='')
 
-        executor = ThreadPoolExecutor()
+        executor = ThreadPoolExecutor(max_workers=1)
         future_result = executor.submit(functools.partial(
             slashlock.unlock,
             self.filepath,
