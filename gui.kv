@@ -49,7 +49,8 @@
 <BlueBlackButton@Button>
     background_normal: ""
     background_color: blue_back
-    size: (100, 50)
+    size: (self.texture_size[0] + dp(36), self.texture_size[1] + dp(16))
+    font_size: '14sp'
     size_hint: (None, None)
 
 <EncryptScreen@Screen>
@@ -99,13 +100,11 @@
 
                 BlueBlackButton:
                     text: "Choose a directory"
-                    on_release: root.choose_directory()
-                    size: (150, 50)
+                    on_release: root.choose_directory(btn=self)
 
                 BlueBlackButton:
                     text: "Continue"
                     on_release: root.click_continue()
-                    size: (110, 50)
 
 <FileNameScreen@Screen>
     name: "file_name_screen"
@@ -186,12 +185,11 @@
                     id: confirm_passphrase
 
             HorizontalContainer:
-                height: password_continue_button.height + 5
+                height: password_continue_button.height + dp(5)
                 BlueBlackButton:
                     id: password_continue_button
                     text: "Continue"
                     on_release: app.set_passphrase()
-                    size: (120, 50)
                     pos: (10, 0)
 
 <DropScreen@Screen>

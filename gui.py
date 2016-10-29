@@ -45,10 +45,13 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
+EXECUTOR = ThreadPoolExecutor(max_workers=1)
+
+
 class ChooseDirectoryScreen(Screen):
 
-    def _directory_selected(self, future):
-        self.disabled = False
+    def _directory_selected(self, btn, future):
+        #btn.disabled = False
 
         save_dir = App.get_running_app().save_directory
 
@@ -66,12 +69,14 @@ class ChooseDirectoryScreen(Screen):
             initialdir=os.path.dirname(App.get_running_app().filepath)
         )
 
-    def choose_directory(self):
-        self.disabled = True
-        executor = ThreadPoolExecutor(max_workers=1)
+    def choose_directory(self, btn=None):
+        #btn.disabled = True
 
-        future_result = executor.submit(self._choose_directory)
-        future_result.add_done_callback(self._directory_selected)
+        future_result = EXECUTOR.submit(self._choose_directory)
+        future_result.add_done_callback(
+            functools.partial(self._directory_selected, btn)
+        )
+
 
 
 class CryptoApp(App):
@@ -153,8 +158,7 @@ class CryptoApp(App):
         """ Encrypt the file """
         print('locking file...', end='')
 
-        executor = ThreadPoolExecutor(max_workers=1)
-        future_result = executor.submit(functools.partial(
+        future_result = EXECUTOR.submit(functools.partial(
             slashlock.lock,
             self.filepath,
             self._passphrase,
@@ -169,8 +173,7 @@ class CryptoApp(App):
 
         print('Unlocking file...', end='')
 
-        executor = ThreadPoolExecutor(max_workers=1)
-        future_result = executor.submit(functools.partial(
+        future_result = EXECUTOR.submit(functools.partial(
             slashlock.unlock,
             self.filepath,
             self._passphrase,
