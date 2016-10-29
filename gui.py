@@ -51,8 +51,7 @@ EXECUTOR = ThreadPoolExecutor(max_workers=1)
 class ChooseDirectoryScreen(Screen):
 
     def _directory_selected(self, btn, future):
-        #btn.disabled = False
-
+        btn.disabled = False
         save_dir = App.get_running_app().save_directory
 
         self.ids['save_directory_label'].text = ' '.join(
@@ -70,7 +69,7 @@ class ChooseDirectoryScreen(Screen):
         )
 
     def choose_directory(self, btn=None):
-        #btn.disabled = True
+        btn.disabled = True
 
         future_result = EXECUTOR.submit(self._choose_directory)
         future_result.add_done_callback(
