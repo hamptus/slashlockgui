@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='slashlockgui',
-    version='0.2.1',
+    version='0.2.2',
     description='SlashlockGUI - A simple GUI for Slashlock',
     url='https://github.com/wookalar/slashlockgui',
     author='Doc Tart',
