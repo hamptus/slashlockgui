@@ -13,8 +13,8 @@ kivy.require('1.9.1')
 
 kivy.Config.set('kivy', 'desktop', 1)
 kivy.Config.set('input', 'mouse', 'mouse,disable_multitouch')
-kivy.Config.set('graphics', 'width', '320')
-kivy.Config.set('graphics', 'height', '320')
+kivy.Config.set('graphics', 'width', '420')
+kivy.Config.set('graphics', 'height', '420')
 
 from kivy.app import App
 from kivy.adapters.simplelistadapter import SimpleListAdapter

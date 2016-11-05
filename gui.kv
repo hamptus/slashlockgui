@@ -156,10 +156,13 @@
     name: "set_passphrase_screen"
     passphrase: passphrase.__self__
 
-    BoxLayout:
-        orientation: "vertical"
-        size: root.size
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+
         StackLayout:
+            size_hint: 1, None
+            height: sum([i.height for i in self.children])
 
             Spacer:
 
@@ -230,9 +233,13 @@
         id: encrypt_layout
 
         Label:
-            text: "Drag a file here to lock or unlock it."
+            text: "Drag a file or folder here to encrypt or decrypt it."
             color: blue_back
+            size_hint_y: 1
+            text_size: self.width, None
+            height: self.texture_size[1]
             font_size: 16
+            halign: 'center'
 
 <ProcessingScreen@Screen>
     name: "processing_screen"
