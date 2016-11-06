@@ -159,10 +159,8 @@ class CryptoApp(App):
             os.path.join(self.save_directory, self.save_as)])
 
         if self.file_status == 'unlocked':
-            print("Calling lock")
             self._encrypt()
         else:
-            print("Calling unlock")
             self._decrypt()
 
         sm = self.root.ids['screen_manager']
@@ -180,7 +178,6 @@ class CryptoApp(App):
 
     def _encrypt(self):
         """ Encrypt the file """
-        print('locking file...', end='')
 
         future_result = _EXECUTOR.submit(functools.partial(
             slashlock.lock,
@@ -195,8 +192,6 @@ class CryptoApp(App):
     def _decrypt(self):
         """ Encrypt the file """
 
-        print('Unlocking file...', end='')
-
         future_result = _EXECUTOR.submit(functools.partial(
             slashlock.unlock,
             self.filepath,
@@ -205,7 +200,6 @@ class CryptoApp(App):
             save_as=self.save_as,
         ))
         future_result.add_done_callback(self._processing_complete)
-        print('Success!')
 
     def _reset(self, passphrase=False):
         """ Reset the application variables """
