@@ -16,26 +16,15 @@
                 size_hint: 1, None
                 height: set_password_label_id.height
 
-                Label:
+                WrappedLabel:
                     id: set_password_label_id
                     text: "What password would you like to use for encryption or decryption?"
-                    font_size: sp(16)
-                    size_hint_y: None
-                    text_size: self.width, None
-                    height: self.texture_size[1]
-                    color: (0, 0, 0, 1)
-                    pos: (10, 0)
 
             Spacer:
 
             HorizontalContainer:
-                Label:
+                WrappedLabel:
                     text: "Password:"
-                    size_hint: None, None
-                    text_size: self.width, None
-                    height: self.texture_size[1]
-                    color: (0, 0, 0, 1)
-                    pos: (10, 0)
 
             HorizontalContainer:
                 height: passphrase.height
@@ -46,13 +35,8 @@
             Spacer:
 
             HorizontalContainer:
-                Label:
+                WrappedLabel:
                     text: "Confirm password:"
-                    size_hint_y: None
-                    text_size: self.width, None
-                    height: self.texture_size[1] + 5
-                    color: (0, 0, 0, 1)
-                    pos: (10, 0)
 
             HorizontalContainer:
                 height: confirm_passphrase.height

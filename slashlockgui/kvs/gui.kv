@@ -45,6 +45,14 @@
     font_size: '14sp'
     size_hint: (None, None)
 
+<WrappedLabel@Label>:
+    size_hint_y: None
+    text_size: self.width, None
+    height: self.texture_size[1]
+    on_size: self.height = self.texture_size[1]
+    color: (0, 0, 0, 1)
+    pos: (10, 0)
+
 <AppContainer>
     orientation: "vertical"
 

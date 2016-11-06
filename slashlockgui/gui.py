@@ -63,9 +63,9 @@ class ChooseDirectoryScreen(Screen):
     def _directory_selected(self, btn, future):
         btn.disabled = False
         save_dir = App.get_running_app().save_directory
-
-        self.ids['save_directory_label'].text = ' '.join(
-            ['Save in:', save_dir])
+        label = self.ids['save_directory_label']
+        label.text = save_dir
+        label.parent.dispatch_generic('on_size')
 
     def click_continue(self):
         sm = App.get_running_app().root.ids['screen_manager']
