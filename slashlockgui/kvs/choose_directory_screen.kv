@@ -14,7 +14,6 @@
                     text: "Where do you want to save your file?"
                     halign: "center"
 
-            Spacer:
             HorizontalContainer:
                 height: sum([i.height for i in self.children])
                 on_size: self.height = sum([i.height for i in self.children])
@@ -27,11 +26,16 @@
                     font_size: sp(18)
                     padding: 5, 5
 
+            Spacer:
+            Spacer:
             AnchorLayout:
-                anchor: "center", "center"
+                anchor_x: "center"
+                anchor_y: "center"
                 size_hint: 1, None
-                height: self.children[0].height
+                height: choose_directory_button_container.height
+
                 BoxLayout:
+                    id: choose_directory_button_container
                     orientation: "horizontal"
                     height: change_directory_button.height
                     size_hint: None, None
