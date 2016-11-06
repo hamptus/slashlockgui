@@ -1,0 +1,21 @@
+<ResultScreen@Screen>
+    name: "result_screen"
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20, 10
+        Label:
+            text: app.result_message
+            color: blue_back
+            font_size: 16
+            size_hint: (1, None)
+            text_size: self.width, None
+            height: self.texture_size[1]
+            halign: 'left'
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+            size_hint: (1, 1)
+            BlueBlackButton:
+                text: "Start over"
+                on_release: app._reset()

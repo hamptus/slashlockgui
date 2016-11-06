@@ -1,0 +1,41 @@
+<FileNameScreen@Screen>
+    name: "file_name_screen"
+    BoxLayout:
+        orientation: "vertical"
+        size: root.size
+        BoxLayout:
+            orientation: "vertical"
+            Label:
+                text: "How would you like to name your file?"
+                color: (0, 0, 0, 1)
+            AnchorLayout:
+                anchor_x: "center"
+                anchor_y: "top"
+                size_hint: (1, 1)
+                TextInput:
+                    focuse: True
+                    multiline: False
+                    text: app.save_as
+                    color: (0, 0, 0, 1)
+                    height: self.minimum_height
+                    width: root.width - 8
+                    size_hint: (None, None)
+                    background_normal: self.background_active
+                    on_text: app.save_as = self.text
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+            size: (self.parent.width, 50)
+            size_hint: (1, 1)
+            BlueBlackButton:
+                text: "Randomize Name"
+                size: (125, 50)
+                on_release: app.randomize_name()
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+            size: (self.parent.width, 50)
+            size_hint: (1, 1)
+            BlueBlackButton:
+                text: app.lock_or_unlock
+                on_release: app.run_lock_or_unlock()

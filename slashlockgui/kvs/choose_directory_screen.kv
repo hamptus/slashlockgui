@@ -1,0 +1,35 @@
+<ChooseDirectoryScreen>
+    name: "choose_directory_screen"
+    BoxLayout:
+        orientation: "vertical"
+        size: root.size
+        Label:
+            text: "Where do you want to save your file?"
+            color: (0, 0, 0, 1)
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "top"
+            size_hint: (1, 1)
+            Label:
+                id: save_directory_label
+                text: "Save in: " + app.save_directory
+                color: (0, 0, 0, 1)
+                size_hint: None, None
+                size: self.texture_size
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+            size: (self.parent.width, 50)
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: None, None
+                size: 270, 50
+                spacing: 10
+
+                BlueBlackButton:
+                    text: "Choose a directory"
+                    on_release: root.choose_directory(btn=self)
+
+                BlueBlackButton:
+                    text: "Continue"
+                    on_release: root.click_continue()

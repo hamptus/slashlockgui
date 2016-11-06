@@ -1,4 +1,5 @@
 import os
+import glob
 import sys
 import hashlib
 import functools
@@ -34,18 +35,27 @@ from kivy.uix.image import Image
 
 import slashlock
 
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
+try:
+    _BASE_DIR = sys._MEIPASS  # Used by PyInstaller for onefile binaries
+except:
+    _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-    return os.path.join(base_path, relative_path)
+_KV_DIR = os.path.join(_BASE_DIR, 'kvs')  # Directory containing kv files
+_EXECUTOR = ThreadPoolExecutor(max_workers=1)
+
+for kv in glob.glob(os.path.join(_KV_DIR, "*.kv")):
+    Builder.load_file(kv)
 
 
-EXECUTOR = ThreadPoolExecutor(max_workers=1)
+_BLUE_BLACK = (133/255, 133/255, 232/255, 1)  # Also defined in styles.kv
+
+class BlueBlackButton(Button):
+
+    def on_disabled(self, obj, disabled):
+        if disabled:
+            self.background_color = (133/255, 133/255, 232/255, 0.2)
+        else:
+            self.background_color = _BLUE_BLACK
 
 
 class ChooseDirectoryScreen(Screen):
@@ -71,12 +81,14 @@ class ChooseDirectoryScreen(Screen):
     def choose_directory(self, btn=None):
         btn.disabled = True
 
-        future_result = EXECUTOR.submit(self._choose_directory)
+        future_result = _EXECUTOR.submit(self._choose_directory)
         future_result.add_done_callback(
             functools.partial(self._directory_selected, btn)
         )
 
 
+class AppContainer(BoxLayout):
+    pass
 
 class CryptoApp(App):
 
@@ -90,13 +102,13 @@ class CryptoApp(App):
     _passphrase = StringProperty('')
     _metadata = None
 
-    def build(self):
-        build_file = resource_path('gui.kv')
-        return Builder.load_file(build_file)
-
     @property
     def _screen_manager(self):
         return self.root.ids['screen_manager']
+
+    def build(self):
+        return AppContainer()
+
 
     def _validate_passphrase(self):
         self._passphrase = self.root.ids[
@@ -170,7 +182,7 @@ class CryptoApp(App):
         """ Encrypt the file """
         print('locking file...', end='')
 
-        future_result = EXECUTOR.submit(functools.partial(
+        future_result = _EXECUTOR.submit(functools.partial(
             slashlock.lock,
             self.filepath,
             self._passphrase,
@@ -185,7 +197,7 @@ class CryptoApp(App):
 
         print('Unlocking file...', end='')
 
-        future_result = EXECUTOR.submit(functools.partial(
+        future_result = _EXECUTOR.submit(functools.partial(
             slashlock.unlock,
             self.filepath,
             self._passphrase,
