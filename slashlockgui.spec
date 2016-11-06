@@ -8,10 +8,10 @@ except ImportError:
 block_cipher = None
 
 
-a = Analysis(['gui.py'],
+a = Analysis(['slashlockgui/gui.py'],
              pathex=['./slashlockgui'],
              binaries=None,
-             datas=[('gui.kv', '.')],
+             datas=[('slashlockgui/kvs/*.kv', 'kvs')],
              hiddenimports=['cffi'],
              hookspath=[],
              runtime_hooks=[],
