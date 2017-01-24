@@ -90,3 +90,5 @@ ENV/
 
 # Snap builds
 *.snap
+snapcraft/stage
+snapcraft/prime
