@@ -1,5 +1,5 @@
 name: slashlock
-version: '0.3'
+version: '0.4'
 summary: Easy to use file and folder encryptor
 description: |
   Slashlock is a simple to use desktop application for encrypting and decrypting
@@ -11,6 +11,12 @@ confinement: strict
 apps:
   slashlock:
     command: bin/wrapper
+    plugs:
+      - opengl
+      - x11
+      - unity7
+      - network
+      - hardware-observe
 
 parts:
   kivy:
@@ -21,7 +27,7 @@ parts:
 
   wrapper:
     plugin: dump
-    source: .
+    source: snap/dump
     organize:
       wrapper: bin/wrapper
 
