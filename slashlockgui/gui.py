@@ -8,6 +8,9 @@ from urllib.parse import unquote
 
 from tkinter import Tk, filedialog
 
+from patch import update_probesysfs
+update_probesysfs()
+
 import kivy
 
 kivy.require('1.9.1')

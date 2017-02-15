@@ -11,30 +11,18 @@ confinement: strict
 apps:
   slashlock:
     command: bin/wrapper
-    plugs:
-      - opengl
-      - x11
-      - unity7
-      - network
-      - hardware-observe
 
 parts:
   kivy:
-    plugin: nil
+    plugin: python
     stage-packages:
+      - cython3
       - python3-kivy
       - libmtdev1
+      - python3-tk
 
   wrapper:
     plugin: dump
     source: snap/dump
     organize:
       wrapper: bin/wrapper
-
-  slashlockgui:
-    plugin: dump
-    source: https://github.com/wookalar/slashlockgui/archive/master.zip
-    source-type: zip
-    organize:
-      slashlockgui/gui.py: bin/slashlockgui
-
